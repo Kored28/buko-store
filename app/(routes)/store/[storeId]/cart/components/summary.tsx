@@ -1,16 +1,15 @@
 "use client"
 
-import Button from "@/components/ui/button";
-import Currency from "@/components/ui/currency";
-import useCart from "@/hooks/use-cart"
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
+import Currency from "@/components/ui/currency";
+import useCart from "@/hooks/use-cart"
+import CheckoutButton from "../../components/checkout-button";
 
 
-const Summary = () => {
+const Summary= () => {
     const searchParams = useSearchParams();
     const items = useCart((state) => state.items);
     const removeAll = useCart((state) => state.removeAll)
@@ -30,14 +29,7 @@ const Summary = () => {
         return total + Number(item.price)
     }, 0)
 
-    const onCheckout = async () => {
-        const response = await axios.post(`${process.env.BUKA_PRIVATE_API_URL}/checkout`, {
-            productIds: items.map((item) => item.id)
-        });
-
-        window.location = response.data.url;
-        
-    }
+    
 
   return (
     <div
@@ -58,9 +50,7 @@ const Summary = () => {
                 <Currency value={totalPrice} />
             </div>
         </div>
-        <Button onClick={onCheckout} className="w-full mt-6">
-            Checkout
-        </Button>
+        <CheckoutButton items={items} />
     </div>
   )
 }

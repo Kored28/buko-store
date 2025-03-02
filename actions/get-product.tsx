@@ -1,9 +1,9 @@
 import { Product } from "@/types";
 
-const URL = `${process.env.BUKA_PRIVATE_API_URL}`
+const URL = `${process.env.BUKA_PUBLIC_API_URL}`
 
-const getProduct = async (id: string, store: string): Promise<Product> => {
-    const res =  await fetch(`${URL}/${store}/products/${id}`)
+const getProduct = async (id: string, storeId: string): Promise<Product> => {
+    const res =  await fetch(`${URL}/${storeId}/products/${id}`)
 
     return res.json()
 }

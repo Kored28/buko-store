@@ -15,12 +15,17 @@ const useCart = create(
     persist<CartStore>((set, get) => ({
         items: [],
         addItem: (data: Product) => {
-            const currentIems = get().items;
-            const existingItem = currentIems.find((item) => item.id === data.id);
+            const currentItems = get().items;
+            const existingItem = currentItems.find((item) => item.id === data.id);
+            const differentStoreItems = currentItems.find((item) => item.storeId !== data.storeId);
 
             if(existingItem) {
                 return toast.success("item already in cart");
             };
+
+            if(differentStoreItems){
+                return toast.error("There is an Item or Items in this cart that is not available to this store")
+            }
 
             set({ items: [...get().items, data] });
             toast.success("item added to cart");

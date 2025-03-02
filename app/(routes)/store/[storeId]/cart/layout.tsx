@@ -7,7 +7,6 @@ export default async function CartLayout({
   }) {
     return (
       <>
-        <Navbar  />
         {children}
       </>
     );

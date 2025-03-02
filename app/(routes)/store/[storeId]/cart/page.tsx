@@ -1,15 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import CartItem from "./components/cart-item";
 
 import Container from "@/components/ui/container";
 import useCart from "@/hooks/use-cart";
-import { useEffect, useState } from "react";
 import Summary from "./components/summary";
+import { useParams, useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 const CartPage = () => {
     const [isMounted, setIsMounted] = useState(false);
     const cart = useCart();
+    const router = useRouter();
+    const params = useParams();
 
     useEffect(() => {
         setIsMounted(true)
@@ -18,13 +23,22 @@ const CartPage = () => {
     if(!isMounted){
         return null;
     }
+
   return (
     <div className="bg-white">
         <Container>
             <div className="px-4 py-6 sm:px-6 lg:px-6">
-                <h1 className="text-3xl font-bold text-black">
-                    Food Cart
-                </h1>
+                <div className="flex gap-6">
+                    <div className="flex items-center hover:text-[#242424] cursor-pointer" onClick={() => router.push(`/store/${params.storeId}`)}>
+                        <ArrowLeft size={20} className="text-black" />
+                        <p className="text-base font-medium">
+                            Back
+                        </p>
+                    </div>
+                    <h1 className="text-3xl font-bold text-black">
+                        Food Cart
+                    </h1>
+                </div>
                 <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12"
                 >
                     <div className="lg:col-span-7">
@@ -42,7 +56,7 @@ const CartPage = () => {
                             ))}
                         </ul>
                     </div>
-                    <Summary />
+                    <Summary/>
                 </div>
             </div>
         </Container>

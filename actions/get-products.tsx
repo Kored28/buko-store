@@ -1,7 +1,7 @@
 import { Product } from "@/types";
 import queryString from "query-string";
 
-const URL = `${process.env.BUKA_PRIVATE_API_URL}`
+const URL = `${process.env.BUKA_PUBLIC_API_URL}`
 
 interface Query {
     categoryId?: string;
